@@ -1,1 +1,1 @@
-# projects-showcase
+# Project Showcase for Jaxon Zeng
