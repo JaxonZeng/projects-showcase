@@ -4,26 +4,23 @@
 <head>
   <style>
     body {
-      background-color: white;
+      background-color: hsl(0, 0%, 6%);
       padding: 100px;
       width: 1000px;
       margin: auto;
       text-align: left;
       font-weight: 300;
-      font-family: 'Open Sans', sans-serif;
-      color: #121212;
+      font-family: "Open Sans", sans-serif;
+      color: #c8c8c8;
+      line-height: 1.5;
     }
 
     h1,
     h2,
     h3,
     h4 {
-      font-family: 'Source Sans Pro', sans-serif;
-      text-align: center;
-    }
-
-    kbd {
-      color: #121212;
+      font-family: "Trebuchet MS", sans-serif;
+      color: #e2e2e2;
     }
   </style>
   <title>CS 184 Path Tracer</title>
@@ -77,11 +74,13 @@
     <h2 align="middle">Overview</h2>
     <p>
       In this challenging project, we collaborated to gradually achieve global illumination. We wrote a ray tracer
-      capable of rendering semi-realistic scenes. We first worked on the basic rendering pipelining that generates rays for our pathtracer and defined intersection behaviors for primitives.
+      capable of rendering semi-realistic scenes. We first worked on the basic rendering pipelining that generates rays
+      for our pathtracer and defined intersection behaviors for primitives.
       After that, we applied the BVH acceleration.
       We also implemented hemisphere sampling and light importance sampling,
       and then further completed the code for indirect illumination. The combination of direct and indirect lighting
-      completed the global illumination. Finally, we implemented adaptive sampling to further accelerate the rendering time.
+      completed the global illumination. Finally, we implemented adaptive sampling to further accelerate the rendering
+      time.
     </p>
     <br>
 
@@ -188,9 +187,12 @@ Compare rendering times on a few scenes with moderately complex geometries with 
       splits all the primitives along the x-axis of the average position. After all, the algorithm reorders all the
       primitives after splitting since the BVH tree needs to maintain a connected relationship. Moreover, if all the
       primitives are split to one side of the tree, the splitting point will simply be the medium element of the
-      iterator. I choosed the average position as the splitting point because it can keep the spatial balance of the primitives
-      unless all primitives have the same x-axis, and potentially count balance. Moreover, calculating the average position is easy and can provide a faster 
-      BVH construction time. The BVH tree can also be more balanced like a balance tree and thus accelerate the rendering time from $O(n)$ to $O(log (n))$.
+      iterator. I choosed the average position as the splitting point because it can keep the spatial balance of the
+      primitives
+      unless all primitives have the same x-axis, and potentially count balance. Moreover, calculating the average
+      position is easy and can provide a faster
+      BVH construction time. The BVH tree can also be more balanced like a balance tree and thus accelerate the
+      rendering time from $O(n)$ to $O(log (n))$.
     </p>
 
     <h3>
