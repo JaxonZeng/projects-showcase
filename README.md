@@ -1,2 +1,2 @@
 # Project Showcase for Jaxon Zeng
-[Website Link](jaxonzeng.github.io/projects-showcase/)
+[Website Link](https://jaxonzeng.github.io/projects-showcase/)
