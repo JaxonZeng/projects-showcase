@@ -101,18 +101,19 @@
 </body>
 <script>
 	var links = document.body.getElementsByTagName("a");
-	var currentPath = window.location.href;
-	var repo_name = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
-	repo_name += "projects_showcase"
+	<!-- var currentPath = window.location.href; -->
+	var a = window.location.href.indexOf(".io")
+	var repo_name = window.location.href.substring(a + 3)
+	<!-- repo_name += "projects_showcase" -->
 
 	Array.from(links).forEach(link => {
 		// Skip external links (http/https)
 		if (link.href.startsWith("http")) return;
 
-		var originalHref = link.getAttribute('href');
+		var actual_name = link.href.substring(link.href.indexOf(".io") + 4)
 
 		// Construct new href
-		link.href = repo_name + originalHref
+		link.href = repo_name + actual_name
 	});
 </script>
 
