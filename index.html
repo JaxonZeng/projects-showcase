@@ -244,14 +244,14 @@
 
 
 	links.forEach(link => {
+		// Leave external links (e.g., Genshin) untouched
+		if (link.href.startsWith("https")) return;
 		const originalHref = link.getAttribute('href');
 
-		// Leave external links (e.g., Genshin) untouched
-		if (link.href.startsWith("http")) return;
+		
 
 		// Replace the href with correct path relative to current directory
-		var actual_name = link.href.substring(link.href.indexOf(".io") + 4);
-		link.href = repo_name + actual_name;
+		link.href = repo_name + originalHref;
 	});
 </script>
 
