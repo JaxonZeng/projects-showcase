@@ -240,11 +240,17 @@
 	var links = document.body.getElementsByTagName("a")
 	var a = window.location.href.indexOf(".io")
 	var repo_name = window.location.href.substring(a + 3)
-	for (var i = 0; i < links.length; i++) {
-		var link = links[i]
-		var actual_name = link.href.substring(link.href.indexOf(".io") + 4)
+
+	links.forEach(link => {
+      const originalHref = link.getAttribute('href');
+
+      // Leave external links (e.g., Genshin) untouched
+      if (link.href.startsWith("http")) return;
+
+      // Replace the href with correct path relative to current directory
+      var actual_name = link.href.substring(link.href.indexOf(".io") + 4)
 		link.href = repo_name + actual_name
-	}
+    });
 </script>
 
 </html>
