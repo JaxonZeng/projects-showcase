@@ -49,7 +49,7 @@
     }
   </style>
 
-  <title>CS 184 Mesh Editor</title>
+  <title>Mesh Editor</title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <!-- Not using below due to lacking bold fontfaces -->
   <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro|Source+Sans+Pro:400,700" rel="stylesheet"> -->
@@ -82,7 +82,8 @@
       In this project, we implemented the cloth simulator and also different
       types of shaders based on GLSL. We first modeled the cloth as a grid of
       point masses and applied constraints to the cloth by adding different
-      types of springs. ......(p2,3,4). At last, we implemented different
+      types of springs. Then we added physical properties to the cloth to make it behaves like a realistic object. At
+      last, we implemented different
       shaders using different shading methods such as diffuse shading,
       Blinn-Phong shading, displacement and bump mapping, and
       environment-mapped reflection.
@@ -142,7 +143,7 @@
 
   <div align="middle">
     <table style="width: 100%">
-      <tr align="center"> 
+      <tr align="center">
         <td>
           <img src="image/p1-noshearing.png" align="middle" width="500px" />
           <figcaption>No shearing constraints</figcaption>
@@ -177,7 +178,7 @@
     masses in the point_masses vector IN ROW-MAJOR (X-AXIS) ORDER for part 1."
   </p>
   <blockquote>
-    
+
     <b>
       Experiment with some the parameters in the simulation. To do so, pause
       the simulation at the start with <kbd>P</kbd>, modify the values of
@@ -234,7 +235,7 @@
 2-6.png
 2-7.png
     <img src="" alt=""><img src="" alt=""><img src="" alt=""> -->
-    
+
   </blockquote>
   <div align="middle">
     <table style="width: 100%">
@@ -498,31 +499,31 @@
         itself, its inertia causes it to resist significant shape changes, resulting in smaller and tighter folds and
         creases. The mass distribution of high-density fabric also means that at any given point of contact, it
         experiences greater gravity, causing it to stabilize more quickly and exhibit smaller ripples or folds.</p>
-        <div align="middle">
-          <table style="width: 100%">
-            <tr align="center">
-              <td>
-                <img src="./image/4-10.png" align="middle" width="400px" />
-                <figcaption>$\text{ks} = 50$</figcaption>
-              </td>
-              <td>
-                <img src="./image/4-11.png" align="middle" width="400px" />
-                <figcaption>$\text{ks} = 500$</figcaption>
-              </td>
-            </tr>
-            <tr align="center">
-              <td>
-                <img src="./image/4-12.png" align="middle" width="400px" />
-                <figcaption>$\text{ks} = 5,000$</figcaption>
-              </td>
-              <td>
-                <img src="./image/4-13.png" align="middle" width="400px" />
-                <figcaption>$\text{ks} = 50,000$</figcaption>
-              </td>
-            </tr>
-          </table>
-        </div>
-  
+      <div align="middle">
+        <table style="width: 100%">
+          <tr align="center">
+            <td>
+              <img src="./image/4-10.png" align="middle" width="400px" />
+              <figcaption>$\text{ks} = 50$</figcaption>
+            </td>
+            <td>
+              <img src="./image/4-11.png" align="middle" width="400px" />
+              <figcaption>$\text{ks} = 500$</figcaption>
+            </td>
+          </tr>
+          <tr align="center">
+            <td>
+              <img src="./image/4-12.png" align="middle" width="400px" />
+              <figcaption>$\text{ks} = 5,000$</figcaption>
+            </td>
+            <td>
+              <img src="./image/4-13.png" align="middle" width="400px" />
+              <figcaption>$\text{ks} = 50,000$</figcaption>
+            </td>
+          </tr>
+        </table>
+      </div>
+
       <p>Low Ks: A low spring constant makes the fabric more susceptible to stretching and deformation. This results in
         the fabric exhibiting more bending and folding during self-collisions, requiring a longer time to reach a state
         of rest. Ultimately, there are more creases, which is a consequence of good extensibility.</p>
@@ -691,7 +692,7 @@
       <p>Jaxon: worked on part 1 and part 5.</p>
       <p>Nothern: Other parts.</p>
       <br />
-      
+
 
 
 

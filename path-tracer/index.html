@@ -23,7 +23,7 @@
       color: #e2e2e2;
     }
   </style>
-  <title>CS 184 Path Tracer</title>
+  <title>Path Tracer</title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
 
@@ -47,15 +47,6 @@
   <h1 align="middle">Path Tracer</h1>
   <h2 align="middle">Nothern, Jaxon Zeng</h2>
 
-  <!-- Add Website URL -->
-  <h2 align="middle">Website URL: <a href="https://cal-cs184-student.github.io/hw-webpages-sp24-JaxonZeng/">
-      https://cal-cs184-student.github.io/hw-webpages-sp24-JaxonZeng/
-    </a>
-  </h2>
-  <h2>
-    <a
-      href="https://cal-cs184-student.github.io/hw-webpages-sp24-NothernSJTU/">https://cal-cs184-student.github.io/hw-webpages-sp24-NothernSJTU/</a>
-  </h2>
   <br><br>
 
 
@@ -85,7 +76,7 @@
     <br>
 
     <h2 align="middle">
-      Part 1: Ray Generation and Scene Intersection (20 Points)
+      Part 1: Ray Generation and Scene Intersection
     </h2>
     <!-- Walk through the ray generation and primitive intersection parts of the rendering pipeline.
 Explain the triangle intersection algorithm you implemented in your own words.
@@ -170,7 +161,7 @@ Show images with normal shading for a few small .dae files. -->
     <br>
 
 
-    <h2 align="middle">Part 2: Bounding Volume Hierarchy (20 Points)</h2>
+    <h2 align="middle">Part 2: Bounding Volume Hierarchy</h2>
     <!-- Walk through your BVH construction algorithm. Explain the heuristic you chose for picking the splitting point.
 Show images with normal shading for a few large .dae files that you can only render with BVH acceleration.
 Compare rendering times on a few scenes with moderately complex geometries with and without BVH acceleration. Present your results in a one-paragraph analysis. -->
@@ -250,7 +241,7 @@ Compare rendering times on a few scenes with moderately complex geometries with 
     </p>
     <br>
 
-    <h2 align="middle">Part 3: Direct Illumination (20 Points)</h2>
+    <h2 align="middle">Part 3: Direct Illumination</h2>
     <!-- Walk through both implementations of the direct lighting function.
 Show some images rendered with both implementations of the direct lighting function.
 Focus on one particular scene with at least one area light and compare the noise levels in soft shadows when rendering with 1, 4, 16, and 64 light rays (the -l flag) and with 1 sample per pixel (the -s flag) using light sampling, not uniform hemisphere sampling.
@@ -494,7 +485,7 @@ Compare the results between uniform hemisphere sampling and lighting sampling in
       computational cost is higher than that of uniform hemisphere sampling.
     </p>
 
-    <h2 align="middle">Part 4: Global Illumination (20 Points)</h2>
+    <h2 align="middle">Part 4: Global Illumination</h2>
     <!-- Walk through your implementation of the indirect lighting function.
 Show some images rendered with global (direct and indirect) illumination. Use 1024 samples per pixel.
 Pick one scene and compare rendered views first with only direct illumination, then only indirect illumination. Use 1024 samples per pixel. (You will have to edit PathTracer::at_least_one_bounce_radiance(...) in your code to generate these views.)
@@ -806,7 +797,7 @@ You will probably want to use the instructional machines for the above renders i
       making the image more realistic and colorful. The quality of the rendering becomes increasingly higher.
     </p>
 
-    <h2 align="middle">Part 5: Adaptive Sampling (20 Points)</h2>
+    <h2 align="middle">Part 5: Adaptive Sampling</h2>
     <!-- Explain adaptive sampling. Walk through your implementation of the adaptive sampling.
 Pick one scene and render it with at least 2048 samples per pixel. Show a good sampling rate image with clearly visible differences in sampling rate over various regions and pixels. Include both your sample rate image, which shows your how your adaptive sampling changes depending on which part of the image you are rendering, and your noise-free rendered result. Use 1 sample per light and at least 5 for max ray depth. -->
 
@@ -855,7 +846,7 @@ Pick one scene and render it with at least 2048 samples per pixel. Show a good s
     <br>
 
     <h2>Cooperation Experience</h2>
-    <p>Mian: </p>
+    <p>Nothern: </p>
     <p>
       For projects like this, where the implementation of later parts relies on the code from earlier sections, it has
       taught me that starting homework earlier is essential. Managing the project and debugging code is very
