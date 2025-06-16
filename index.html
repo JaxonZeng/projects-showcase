@@ -208,7 +208,7 @@
     <a href="/neural-radiance-field/index.html" target="_blank">Neural Radiance Field</a>
   </div>
 
-  <script>
+  <!-- <script>
     const links = document.body.getElementsByTagName("a");
     const currentHost = window.location.host;
     const currentHref = window.location.href;
@@ -224,6 +224,23 @@
         }
       }
     }
+  </script> -->
+
+  <script>
+    // Fix internal links based on current directory (e.g., /projects-showcase/)
+    const currentPath = window.location.pathname;
+    const basePath = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+    const links = document.querySelectorAll('a[href^="/"]');
+
+    links.forEach(link => {
+      const originalHref = link.getAttribute('href');
+
+      // Leave external links (e.g., Genshin) untouched
+      if (link.href.startsWith("http")) return;
+
+      // Replace the href with correct path relative to current directory
+      link.setAttribute('href', basePath + originalHref.substring(1));
+    });
   </script>
 </body>
 
