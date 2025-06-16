@@ -102,9 +102,8 @@
 <script>
 	var links = document.body.getElementsByTagName("a");
 	var currentPath = window.location.pathname;
-	var repo_name = currentPath.substring(0, currentPath.lastIndexOf('/'));
-
-
+	var repo_name = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+	repo_name += "projects_showcase"
 
 	Array.from(links).forEach(link => {
 		// Skip external links (http/https)
