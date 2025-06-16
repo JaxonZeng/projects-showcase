@@ -1,4 +1,4 @@
-<!-- <html>
+<html>
 
 <head>
 	<style>
@@ -105,14 +105,15 @@
 	var repo_name = window.location.href.substring(a + 3)
 	for (var i = 0; i < links.length; i++) {
 		var link = links[i]
+		if (link.href.startsWith("http")) return;
 		var actual_name = link.href.substring(link.href.indexOf(".io") + 4)
 		link.href = repo_name + actual_name
 	}
 </script>
 
-</html> -->
+</html>
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 
 <head>
@@ -208,24 +209,6 @@
     <a href="/neural-radiance-field/index.html" target="_blank">Neural Radiance Field</a>
   </div>
 
-  <!-- <script>
-    const links = document.body.getElementsByTagName("a");
-    const currentHost = window.location.host;
-    const currentHref = window.location.href;
-    const repoStart = currentHref.indexOf(".io");
-
-    if (repoStart !== -1) {
-      const repoName = currentHref.substring(repoStart + 3);
-      for (let link of links) {
-        if (link.href.includes(currentHost) && !link.href.startsWith("http")) {
-          const linkStart = link.href.indexOf(".io") + 4;
-          const actualPath = link.href.substring(linkStart);
-          link.href = repoName + actualPath;
-        }
-      }
-    }
-  </script> -->
-
   <script>
     // Fix internal links based on current directory (e.g., /projects-showcase/)
     const currentPath = window.location.pathname;
@@ -234,14 +217,11 @@
 
     links.forEach(link => {
       const originalHref = link.getAttribute('href');
-
-      // Leave external links (e.g., Genshin) untouched
+	  <!-- for Genshin MoonFog -->
       if (link.href.startsWith("http")) return;
-
-      // Replace the href with correct path relative to current directory
       link.setAttribute('href', basePath + originalHref.substring(1));
     });
   </script>
 </body>
 
-</html>
+</html> -->
