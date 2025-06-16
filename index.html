@@ -103,11 +103,12 @@
 	var links = document.body.getElementsByTagName("a")
 	var a = window.location.href.indexOf(".io")
 	var repo_name = window.location.href.substring(a + 3)
-	
+
 	for (var i = 0; i < links.length; i++) {
 		var link = links[i]
 		console.log(link.href);
 		var actual_name = link.href.substring(link.href.indexOf(".io") + 4)
+		console.log(actual_name)
 		if (!actual_name) {
 			link.href = repo_name + actual_name
 		}
