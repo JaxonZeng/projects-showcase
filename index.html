@@ -100,7 +100,7 @@
 
 </body>
 <script>
-	var links = document.body.getElementsByTagName("a");
+	<!-- var links = document.body.getElementsByTagName("a");
 
 	var a = window.location.href.indexOf(".io")
 	var repo_name = window.location.href.substring(a + 3)
@@ -112,7 +112,16 @@
 
 		// Construct new href
 		link.href = repo_name + "projects_showcase" + link.href
-	});
-</script>
+	}); -->
+	var links = document.body.getElementsByTagName("a")
+	var a = window.location.href.indexOf(".io")
+	var repo_name = window.location.href.substring(a + 3)
+	for (var i = 0; i < links.length; i++) {
+		if (link.href.startsWith("http")) { } else {
+			var link = links[i] 
+			var actual_name = link.href.substring(link.href.indexOf(".io") + 4) 
+			link.href = repo_name + actual_name
+		}
+	} </script>
 
 </html>
