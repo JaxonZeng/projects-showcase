@@ -206,13 +206,13 @@
 	<br>
 	<h3 align="middle">Computer Graphics</h3>
 	<div <div style="text-align: center;">
-		<a href="/rasterizer/index.html" target="_blank" >Rasterizer</a>
+		<a href="/rasterizer/index.html" target="_blank">Rasterizer</a>
 		<br><br>
-		<a href="/mesh-edit/index.html" target="_blank" >Mesh Edit</a>
+		<a href="/mesh-edit/index.html" target="_blank">Mesh Edit</a>
 		<br><br>
-		<a href="/path-tracer/index.html" target="_blank" >Path Tracer</a>
+		<a href="/path-tracer/index.html" target="_blank">Path Tracer</a>
 		<br><br>
-		<a href="/cloth-simulator/index.html"target="_blank" >Cloth Simulator</a>
+		<a href="/cloth-simulator/index.html" target="_blank">Cloth Simulator</a>
 		<br><br>
 		<a href="https://kingsleysitu.github.io/" target="_blank" rel="noopener noreferrer">Genshin FogMoon</a>
 
@@ -221,36 +221,38 @@
 	<br><br>
 	<h3 align="middle">Computer Graphics</h3>
 	<div <div style="text-align: center;">
-		<a href="/colorizing-photo-collection/index.html" target="_blank" >Colorizing the Prokudin-Gorskii Photo Collection</a>
+		<a href="/colorizing-photo-collection/index.html" target="_blank">Colorizing the Prokudin-Gorskii Photo
+			Collection</a>
 		<br><br>
-		<a href="/filters-and-frequencies/index.html" target="_blank" >Filters and Frequencies</a>
+		<a href="/filters-and-frequencies/index.html" target="_blank">Filters and Frequencies</a>
 		<br><br>
-		<a href="/face-morphing/index.html" target="_blank" >Face Morphing</a>
+		<a href="/face-morphing/index.html" target="_blank">Face Morphing</a>
 		<br><br>
-		<a href="/image-warping-and-mosaicing/index.html" target="_blank" >Image Warping and Mosaicing</a>
+		<a href="/image-warping-and-mosaicing/index.html" target="_blank">Image Warping and Mosaicing</a>
 		<br><br>
-		<a href="/diffusion-models/index.html" target="_blank" >Diffusion Models</a>
+		<a href="/diffusion-models/index.html" target="_blank">Diffusion Models</a>
 		<br><br>
-		<a href="/neural-radiance-field/index.html" target="_blank" >Neural Radiance Field</a>
+		<a href="/neural-radiance-field/index.html" target="_blank">Neural Radiance Field</a>
 	</div>
 
 
 </body>
 <script>
-	var links = document.body.getElementsByTagName("a")
-	var a = window.location.href.indexOf(".io")
-	var repo_name = window.location.href.substring(a + 3)
+	var links = document.body.getElementsByTagName("a");
+	var repo_name = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+	repo_name += "projects_showcase"
+
 
 	links.forEach(link => {
-      const originalHref = link.getAttribute('href');
+		const originalHref = link.getAttribute('href');
 
-      // Leave external links (e.g., Genshin) untouched
-      if (link.href.startsWith("http")) return;
+		// Leave external links (e.g., Genshin) untouched
+		if (link.href.startsWith("http")) return;
 
-      // Replace the href with correct path relative to current directory
-      var actual_name = link.href.substring(link.href.indexOf(".io") + 4)
-		link.href = repo_name + actual_name
-    });
+		// Replace the href with correct path relative to current directory
+		var actual_name = link.href.substring(link.href.indexOf(".io") + 4);
+		link.href = repo_name + actual_name;
+	});
 </script>
 
 </html>
