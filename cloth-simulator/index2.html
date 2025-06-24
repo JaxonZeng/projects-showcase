@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloth Simulator Project</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        h2 {
+            color: #34495e;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .parameter-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .parameter-table th, .parameter-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .parameter-table th {
+            background-color: #ecf0f1;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Cloth Simulator Project</h1>
+            <p>Exploring realistic fabric behavior through physics and advanced graphics techniques.</p>
+        </header>
+
+        <div class="section">
+            <h2>Project Overview</h2>
+            <p>This project features a real-time cloth simulator that models how fabric moves under physical forces like gravity and collisions. Beyond realistic motion, it incorporates custom visual effects using GLSL shaders to enhance the fabric's appearance.</p>
+        </div>
+
+        <div class="section">
+            <h2>How It Works</h2>
+            <p>The cloth is simulated as a grid of points (point masses) connected by springs, mimicking real fabric behavior. Three types of springs are used to replicate different forces:</p>
+            <ul>
+                <li><strong>Structural Springs:</strong> Connect neighboring points to resist stretching and compression.</li>
+                <li><strong>Shearing Springs:</strong> Prevent diagonal distortion of the fabric.</li>
+                <li><strong>Bending Springs:</strong> Resist folding, maintaining smoothness by connecting points two spaces apart.</li>
+            </ul>
+            <p>This structure allows the cloth to respond naturally to movement and external forces.</p>
+            <!-- Placeholder for wireframe screenshots -->
+            <p><em>[Insert screenshots of cloth wireframe showing point masses and springs with different constraints: (1) no shearing, (2) only shearing, (3) all constraints.]</em></p>
+        </div>
+
+        <div class="section">
+            <h2>Simulation Features</h2>
+            <p><strong>Physical Properties:</strong> The simulator lets users adjust parameters to see how the cloth behaves under different conditions. Key parameters include:</p>
+            <table class="parameter-table">
+                <tr>
+                    <th>Parameter</th>
+                    <th>Effect</th>
+                </tr>
+                <tr>
+                    <td><strong>Spring Constant (ks)</strong></td>
+                    <td>Controls stiffness. Low ks creates soft, droopy fabric with slow, large waves, taking longer to settle. High ks results in stiff fabric with small, fast vibrations, stabilizing quickly.</td>
+                </tr>
+                <tr>
+                    <td><strong>Density</strong></td>
+                    <td>Affects weight. Higher density causes more drooping due to gravity, with slower movement. Lower density results in lighter fabric with less sagging.</td>
+                </tr>
+                <tr>
+                    <td><strong>Damping</strong></td>
+                    <td>Reduces motion over time. High damping makes the cloth settle faster, while low damping leads to prolonged oscillations.</td>
+                </tr>
+            </table>
+            <p><em>[Insert screenshots showing cloth behavior with varied ks, density, and damping compared to default settings.]</em></p>
+            <p><strong>Collisions:</strong> The cloth interacts realistically with objects like spheres and planes. When a collision occurs, the cloth's position is adjusted to prevent passing through the object, simulating contact and friction.</p>
+            <p><em>[Insert screenshots of shaded cloth at rest on a sphere with ks=500, ks=5000 (default), and ks=50000, and on a plane.]</em></p>
+            <p><em>[Insert screenshots documenting cloth self-collision and folding over time with varied ks and density.]</em></p>
+        </div>
+
+        <div class="section">
+            <h2>Visual Effects with Shaders</h2>
+            <p>Shaders, written in GLSL, enhance the cloth's visual realism by running parallel computations on the GPU for faster rendering. Two main types of shaders are used:</p>
+            <ul>
+                <li><strong>Vertex Shaders:</strong> Transform the cloth's shape and position.</li>
+                <li><strong>Fragment Shaders:</strong> Determine the color and lighting of each pixel after transformation.</li>
+            </ul>
+            <p>Several shading techniques are implemented:</p>
+            <ul>
+                <li><strong>Blinn-Phong Shading:</strong> Combines ambient (uniform light), diffuse (directional light based on surface angle), and specular (highlight glare) components for realistic lighting.</li>
+                <li><strong>Bump and Displacement Mapping:</strong> Add surface texture illusions. Bump mapping alters lighting to simulate texture, while displacement mapping physically alters geometry for a more pronounced effect.</li>
+                <li><strong>Environment Mapping:</strong> Simulates reflections, ideal for shiny materials like silk.</li>
+            </ul>
+            <p><em>[Insert screenshots of Blinn-Phong components (ambient, diffuse, specular, and combined), custom texture mapping, bump and displacement mapping on cloth and sphere, and mirror shader effects.]</em></p>
+        </div>
+
+        <div class="section">
+            <h2>Experimentation and Results</h2>
+            <p>Adjusting simulation parameters reveals diverse cloth behaviors:</p>
+            <ul>
+                <li>Softer or denser cloth shows deeper folds and slower stabilization.</li>
+                <li>Stiffer cloth retains shape with minimal deformation, settling quickly.</li>
+                <li>Collisions and self-interactions create realistic wrinkles, especially with low ks or high density, leading to more pronounced creases.</li>
+            </ul>
+            <p>Shaders significantly enhance visual fidelity, making the fabric appear textured, reflective, or shiny based on the chosen effect. For instance, displacement mapping creates a coarser surface at higher resolutions compared to the smoother effect of bump mapping.</p>
+        </div>
+
+        <div class="section">
+            <h2>Summary</h2>
+            <p>This cloth simulator blends physics-based animation with cutting-edge graphics to create interactive and visually compelling fabric simulations. Designed to be educational and engaging, it allows users of all backgrounds to explore the principles of cloth behavior and rendering techniques in computer graphics.</p>
+        </div>
+    </div>
+</body>
+</html>
