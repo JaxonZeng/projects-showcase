@@ -79,7 +79,7 @@
         </tr>
       </table>
     </div>
-<br><br>
+    <br><br>
     <h2 align="middle">Exhaustive Search</h2>
 
     <h3 align="middle">Approach</h3>
@@ -100,15 +100,22 @@
     </ol>
 
     <h3 align="middle">Best Displacement</h3>
-  <p>For the initial phase of the image alignment process, I developed a method to determine the optimal displacement for stacking three grayscale images into a single color photograph. This involves the following key steps:</p>
-  <ul>
-    <li><strong>Implementing Normalized Cross-Correlation (NCC):</strong><br>
-      I used NCC, a technique that measures similarity between images by calculating the dot product of two normalized vectors (<code>image1 / ||image1||</code> and <code>image2 / ||image2||</code>). Since each image is represented as a matrix, I normalize it by calculating its norm and reshaping it into a vector for comparison.</li>
-    <li><strong>Searching Within a Defined Window:</strong><br>
-      The algorithm searches for the best alignment within a displacement window of <code>[-15, 15]</code> pixels along both the x and y axes. It evaluates the NCC score for each possible shift and identifies the displacement that yields the highest correlation, indicating the best match.</li>
-    <li><strong>Addressing NCC Limitations with Border Cropping:</strong><br>
-      I discovered that relying solely on NCC often led to incorrect alignments due to interference from image borders. To improve accuracy, I implemented a cropping step, removing 15% of each side of the image. This allows the algorithm to focus on the central content, reducing border influence and enhancing processing speed.</li>
-  </ul>
+    <p>For the initial phase of the image alignment process, I developed a method to determine the optimal displacement
+      for stacking three grayscale images into a single color photograph. This involves the following key steps:</p>
+    <ul>
+      <li><strong>Implementing Normalized Cross-Correlation (NCC):</strong><br>
+        I used NCC, a technique that measures similarity between images by calculating the dot product of two normalized
+        vectors (<code>image1 / ||image1||</code> and <code>image2 / ||image2||</code>). Since each image is represented
+        as a matrix, I normalize it by calculating its norm and reshaping it into a vector for comparison.</li>
+      <li><strong>Searching Within a Defined Window:</strong><br>
+        The algorithm searches for the best alignment within a displacement window of <code>[-15, 15]</code> pixels
+        along both the x and y axes. It evaluates the NCC score for each possible shift and identifies the displacement
+        that yields the highest correlation, indicating the best match.</li>
+      <li><strong>Addressing NCC Limitations with Border Cropping:</strong><br>
+        I discovered that relying solely on NCC often led to incorrect alignments due to interference from image
+        borders. To improve accuracy, I implemented a cropping step, removing 15% of each side of the image. This allows
+        the algorithm to focus on the central content, reducing border influence and enhancing processing speed.</li>
+    </ul>
 
 
     <div align="middle">
@@ -116,107 +123,134 @@
         <tr>
           <td>
             <img src="images/1-1.jpg" align="middle" width="300px" />
-            <figcaption align="middle">Cathedral <br>green-shift: <code>dx 2, dy 5</code> <br> red-shift: <code>dx 3, dy 12</code>
+            <figcaption align="middle">Cathedral <br>green-shift: <code>dx 2, dy 5</code> <br> red-shift:
+              <code>dx 3, dy 12</code>
             </figcaption>
           </td>
           <td>
             <img src="images/1-2.jpg" align="middle" width="300px" />
-            <figcaption align="middle">Monastery <br>green-shift: <code>dx 2, dy -3</code><br>red-shift: <code>dx 2, dy 3</code></figcaption>
+            <figcaption align="middle">Monastery <br>green-shift: <code>dx 2, dy -3</code><br>red-shift:
+              <code>dx 2, dy 3</code></figcaption>
           </td>
           <td>
             <img src="images/1-3.jpg" align="middle" width="300px" />
-            <figcaption align="middle">Tobolsk<br>green-shift: <code>dx 3, dy 3</code><br> red-shift: <code>dx 3, dy 6</code></figcaption>
+            <figcaption align="middle">Tobolsk<br>green-shift: <code>dx 3, dy 3</code><br> red-shift:
+              <code>dx 3, dy 6</code></figcaption>
           </td>
         </tr>
       </table>
     </div>
 
-<br>
-<br>
+    <br>
+    <br>
 
 
     <h2 align="middle">Image Pyramid Processing</h2>
-  <p>For larger images, such as those with a resolution of 3810x3251 pixels compared to 390x341 for smaller ones, the exhaustive search method for alignment becomes impractical due to excessive processing time. The higher resolution necessitates a larger displacement search range, increasing by a factor of 10 relative to the resolution increase. This results in an exponential rise in computational demand. To address this, I adopted a more efficient approach known as image pyramid processing.</p>
-  <p>This technique enhances efficiency through the following steps:</p>
-  <ul>
-    <li><b>Downscaling the Image:</b> The process begins by reducing the image size by a factor of 2, creating a smaller version of the original.</li>
-    <li><b>Creating a Multi-Level Pyramid:</b> My algorithm constructs a pyramid of images with 5 levels, each at a progressively lower resolution.</li>
-    <li><b>Iterative Displacement Calculation:</b> At the base (lowest resolution) level, I apply the displacement algorithm to find an initial alignment. This shift is then updated and refined at each subsequent level, moving up to higher resolutions. This method ensures that the search range at each level remains comparable to that used for small images.</li>
-    <li><b>Reducing Computational Load:</b> By handling calculations at reduced resolutions initially, the overall processing effort at each level is significantly minimized, making the alignment process much faster.</li>
-  </ul>
+    <p>For larger images, such as those with a resolution of 3810x3251 pixels compared to 390x341 for smaller ones, the
+      exhaustive search method for alignment becomes impractical due to excessive processing time. The higher resolution
+      necessitates a larger displacement search range, increasing by a factor of 10 relative to the resolution increase.
+      This results in an exponential rise in computational demand. To address this, I adopted a more efficient approach
+      known as image pyramid processing.</p>
+    <p>This technique enhances efficiency through the following steps:</p>
+    <ul>
+      <li><b>Downscaling the Image:</b> The process begins by reducing the image size by a factor of 2, creating a
+        smaller version of the original.</li>
+      <li><b>Creating a Multi-Level Pyramid:</b> My algorithm constructs a pyramid of images with 5 levels, each at a
+        progressively lower resolution.</li>
+      <li><b>Iterative Displacement Calculation:</b> At the base (lowest resolution) level, I apply the displacement
+        algorithm to find an initial alignment. This shift is then updated and refined at each subsequent level, moving
+        up to higher resolutions. This method ensures that the search range at each level remains comparable to that
+        used for small images.</li>
+      <li><b>Reducing Computational Load:</b> By handling calculations at reduced resolutions initially, the overall
+        processing effort at each level is significantly minimized, making the alignment process much faster.</li>
+    </ul>
 
     <div align="middle">
       <table style="width=100%">
         <tr>
           <td>
             <img src="images/2-1.jpg" align="middle" width="300px" />
-            <figcaption align="middle">Cathedral<br>green-shift: <code>dx 2, dy 5</code><br>red-shift: <code>dx 3, dy 12</code></figcaption>
+            <figcaption align="middle">Cathedral<br>green-shift: <code>dx 2, dy 5</code><br>red-shift:
+              <code>dx 3, dy 12</code></figcaption>
           </td>
           <td>
             <img src="images/2-2.jpg" align="middle" width="300px" />
-            <figcaption align="middle">Church<br>green-shift: <code>dx 4, dy 25</code><br>red-shift: <code>dx -4, dy 58</code></figcaption>
+            <figcaption align="middle">Church<br>green-shift: <code>dx 4, dy 25</code><br>red-shift:
+              <code>dx -4, dy 58</code></figcaption>
           </td>
           <td>
             <img src="images/2-3.jpg" align="middle" width="300px" />
-            <figcaption align="middle">Emir<br>green-shift: <code>dx 24, dy 49</code><br>red-shift: <code>dx 41, dy 106</code></figcaption>
+            <figcaption align="middle">Emir<br>green-shift: <code>dx 24, dy 49</code><br>red-shift:
+              <code>dx 41, dy 106</code></figcaption>
           </td>
         </tr>
         <br>
         <tr>
           <td>
             <img src="images/2-4.jpg" align="middle" width="300px" />
-            <figcaption align="middle">Harvesters<br>green-shift: <code>dx 14, dy 60</code><br>red-shift: <code>dx 11, dy 124</code>
+            <figcaption align="middle">Harvesters<br>green-shift: <code>dx 14, dy 60</code><br>red-shift:
+              <code>dx 11, dy 124</code>
             </figcaption>
           </td>
           <td>
             <img src="images/2-5.jpg" align="middle" width="300px" />
-            <figcaption align="middle">Icon<br>green-shift: <code>dx 16, dy 39</code><br>red-shift: <code>dx 23, dy 89</code></figcaption>
+            <figcaption align="middle">Icon<br>green-shift: <code>dx 16, dy 39</code><br>red-shift:
+              <code>dx 23, dy 89</code></figcaption>
           </td>
           <td>
             <img src="images/2-6.jpg" align="middle" width="300px" />
-            <figcaption align="middle">Lady<br>green-shift: <code>dx 9, dy 57</code><br>red-shift: <code>dx 13, dy 120</code></figcaption>
+            <figcaption align="middle">Lady<br>green-shift: <code>dx 9, dy 57</code><br>red-shift:
+              <code>dx 13, dy 120</code></figcaption>
           </td>
         </tr>
         <tr>
           <td>
             <img src="images/2-7.jpg" align="middle" width="300px" />
-            <figcaption align="middle">Melons<br>green-shift: <code>dx 10, dy 80</code><br>red-shift: <code>dx 14, dy 176</code></figcaption>
+            <figcaption align="middle">Melons<br>green-shift: <code>dx 10, dy 80</code><br>red-shift:
+              <code>dx 14, dy 176</code></figcaption>
           </td>
           <td>
             <img src="images/2-8.jpg" align="middle" width="300px" />
-            <figcaption align="middle">Monastery<br>green-shift: <code>dx 2, dy -3</code><br>red-shift: <code>dx 2, dy 3</code></figcaption>
+            <figcaption align="middle">Monastery<br>green-shift: <code>dx 2, dy -3</code><br>red-shift:
+              <code>dx 2, dy 3</code></figcaption>
           </td>
           <td>
             <img src="images/2-9.jpg" align="middle" width="300px" />
-            <figcaption align="middle">Onion Church<br>green-shift: <code>dx 24, dy 52</code><br>red-shift: <code>dx 35, dy 107</code>
+            <figcaption align="middle">Onion Church<br>green-shift: <code>dx 24, dy 52</code><br>red-shift:
+              <code>dx 35, dy 107</code>
             </figcaption>
           </td>
         </tr>
         <tr>
           <td>
             <img src="images/2-10.jpg" align="middle" width="300px" />
-            <figcaption align="middle">Sculpture<br>green-shift: <code>dx -11, dy 33</code><br>red-shift: <code>dx -27, dy 140</code>
+            <figcaption align="middle">Sculpture<br>green-shift: <code>dx -11, dy 33</code><br>red-shift:
+              <code>dx -27, dy 140</code>
             </figcaption>
           </td>
           <td>
             <img src="images/2-11.jpg" align="middle" width="300px" />
-            <figcaption align="middle">Self Portrait<br>green-shift: <code>dx 29, dy 78</code><br>red-shift: <code>dx 37, dy 176</code>
+            <figcaption align="middle">Self Portrait<br>green-shift: <code>dx 29, dy 78</code><br>red-shift:
+              <code>dx 37, dy 176</code>
             </figcaption>
           </td>
           <td>
             <img src="images/2-12.jpg" align="middle" width="300px" />
-            <figcaption align="middle">Three Generations<br>green-shift: <code>dx 13, dy 52</code><br>red-shift: <code>dx 11, dy 111</code>
+            <figcaption align="middle">Three Generations<br>green-shift: <code>dx 13, dy 52</code><br>red-shift:
+              <code>dx 11, dy 111</code>
             </figcaption>
           </td>
         </tr>
         <tr>
           <td>
             <img src="images/2-13.jpg" align="middle" width="300px" />
-            <figcaption align="middle">Tobolsk<br>green-shift: <code>dx 3, dy 3</code><br>red-shift: <code>dx 3, dy 6</code></figcaption>
+            <figcaption align="middle">Tobolsk<br>green-shift: <code>dx 3, dy 3</code><br>red-shift:
+              <code>dx 3, dy 6</code></figcaption>
           </td>
           <td>
             <img src="images/2-14.jpg" align="middle" width="300px" />
-            <figcaption align="middle">Train<br>green-shift: <code>dx 6, dy 42</code><br>red-shift: <code>dx 32, dy 87</code></figcaption>
+            <figcaption align="middle">Train<br>green-shift: <code>dx 6, dy 42</code><br>red-shift:
+              <code>dx 32, dy 87</code></figcaption>
           </td>
 
         </tr>
@@ -224,13 +258,21 @@
     </div>
     <br><br>
     <h2 align="middle">Bell & Whistels</h2>
-  <p>After reconstructing color photographs from the Prokudin-Gorskii collection, I observed that some images, such as "church.tif," still exhibited unnatural color casts. To address this issue, I implemented an automatic white balancing technique based on the white-patch algorithm. This method improves color accuracy through the following approach:</p>
-  <ul>
-    <li><strong>Identifying a White Reference:</strong> The white-patch algorithm assumes that the brightest area in an image represents white. This serves as a keystone for correcting color casts across the entire image.</li>
-    <li><strong>Using the 95th Percentile for Precision:</strong> In my implementation, I selected the color value at the 95th percentile of brightness as the reference white. This avoids over-correction from extreme pixel values, providing a more balanced result compared to using the absolute brightest pixel.</li>
-    <li><strong>Normalizing Color Channels:</strong> Based on this reference, the algorithm normalizes the red, green, and blue channels, adjusting the overall color balance to achieve a more natural and realistic appearance.</li>
-  </ul>
-  <p>This enhancement significantly improved the visual quality of the colorized photographs, ensuring the hues reflect a truer representation of the original scenes.</p>
+    <p>After reconstructing color photographs from the Prokudin-Gorskii collection, I observed that some images, such as
+      "church.tif," still exhibited unnatural color casts. To address this issue, I implemented an automatic white
+      balancing technique based on the white-patch algorithm. This method improves color accuracy through the following
+      approach:</p>
+    <ul>
+      <li><strong>Identifying a White Reference:</strong> The white-patch algorithm assumes that the brightest area in
+        an image represents white. This serves as a keystone for correcting color casts across the entire image.</li>
+      <li><strong>Using the 95th Percentile for Precision:</strong> In my implementation, I selected the color value at
+        the 95th percentile of brightness as the reference white. This avoids over-correction from extreme pixel values,
+        providing a more balanced result compared to using the absolute brightest pixel.</li>
+      <li><strong>Normalizing Color Channels:</strong> Based on this reference, the algorithm normalizes the red, green,
+        and blue channels, adjusting the overall color balance to achieve a more natural and realistic appearance.</li>
+    </ul>
+    <p>This enhancement significantly improved the visual quality of the colorized photographs, ensuring the hues
+      reflect a truer representation of the original scenes.</p>
     <div align="middle">
       <table>
         <tr>

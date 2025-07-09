@@ -18,9 +18,14 @@
     h1,
     h2,
     h3,
-    h4 {
+    h4,
+    h5 {
       font-family: "Trebuchet MS", sans-serif;
       color: #e2e2e2;
+    }
+
+    a {
+      color: #7caefe;
     }
 
     blockquote {
@@ -56,31 +61,70 @@
 
   <div>
     <h2 align="middle">Overview</h2>
-    <!-- done -->
-    The project contains two parts that experiments with diffusion models. For the first part, I interact with a
-    pretrain diffusion model <a href="https://huggingface.co/docs/diffusers/api/pipelines/deepfloyd_if">DeepFloyd IF</a>
-    to perform several types of image generation. For the second part, I build and train my own diffusion model using
-    <code>torch.nn.Module</code> with the MNIST dataset.<br>
+
+    <p>This project is divided into two main components, each focusing on the innovative use of <strong>diffusion
+        models</strong> for image-related tasks:</p>
+    <ul>
+      <li><strong>Part 1: Utilizing a Pretrained Model</strong>
+        <ul>
+          <li>I experimented with a pretrained diffusion model called <strong><a
+                href="https://huggingface.co/docs/diffusers/api/pipelines/deepfloyd_if">DeepFloyd IF</a></strong>,
+            sourced from Hugging Face, to generate various types of images. This part showcases how existing advanced
+            models can transform text descriptions into visual content.</li>
+        </ul>
+      </li>
+      <li><strong>Part 2: Developing a Custom Model</strong>
+        <ul>
+          <li>I designed and trained my own diffusion model from scratch using the <code>torch.nn.Module</code>
+            framework, with the <strong>MNIST dataset</strong> (a collection of handwritten digits) for training. This
+            demonstrates the process of building tailored solutions for specific image processing tasks like denoising.
+          </li>
+        </ul>
+      </li>
+    </ul>
 
 
-
+    <br><br>
     <h2 align="middle">Part A: The Power of Diffusion Models</h2>
     <h3 align="middle">Setup</h3>
-    For the whole part, I use the pretrain DeepFloyd IF imported from <a
-      href="https://huggingface.co/docs/diffusers/api/pipelines/deepfloyd_if">Hugging Face</a>. The model has two
-    stages. The first one takes in noisy images of size $64\times 64$ and text embeddings to generate a denoised image.
-    The second stage takes in the output of the first stage and generates images of size $256\times 256$.<br>
-    In the forward process, as $t$ increases, the images will get noisier. And the backward process, which is what the
-    denoiser do in stage one of the diffusion model is to estimate the noise in the image.
+
+
+    <h4>Model Overview</h4>
+    <ul>
+      <li><strong>Model Selection:</strong> For Part A, I utilize the pretrained <strong><a
+            href="https://huggingface.co/docs/diffusers/api/pipelines/deepfloyd_if">DeepFloyd IF</a></strong> model from
+        Hugging Face. This advanced tool is designed to generate high-quality images from text prompts through a
+        structured process.</li>
+      <li><strong>Purpose:</strong> The aim is to demonstrate how diffusion models like DeepFloyd IF can transform
+        textual descriptions into detailed visuals, making image creation accessible to non-experts.</li>
+    </ul>
+    <h4>Two-Stage Process</h4>
+    <ul>
+      <li><strong>Stage 1 - Initial Denoising:</strong> The first stage processes noisy images of size $64\times64$
+        pixels, integrating them with text embeddings (text converted into a format the model can interpret) to produce
+        a denoised, preliminary image. This forms the basis of the image generation.</li>
+      <li><strong>Stage 2 - Resolution Enhancement:</strong> The output from the first stage is then refined in this
+        stage, upscaling the image to a higher resolution of $256\times256$ pixels, resulting in sharper and more
+        detailed visuals.</li>
+    </ul>
+    <h4>Diffusion Process Explained</h4>
+    <ul>
+      <li><strong>Forward Process:</strong> As the timestep variable $t$ increases, noise is incrementally added to the
+        images, progressively obscuring their clarity. This simulates a degradation of the image over time.</li>
+      <li><strong>Backward Process:</strong> Conversely, the backward process, primarily executed by the denoiser in
+        Stage 1, focuses on estimating and removing the noise from the image. This step-by-step reconstruction is
+        central to how diffusion models achieve clear, refined outputs.</li>
+    </ul>
     <div align="middle">
       <img src="imagesa/ddpm_markov.png" align="middle" width="700px" />
     </div>
     For the whole part, I use random seed $24$ for reproducibility purpose. I also use the text embeddings of
     <code>"a high quality photo"</code> as a default text embeddings if not mentioned specifically.<br>
+    <br>
     Here's some images generated from the model:
     <div align="middle">
       <table style="width=100%">
-        <b>Inference steps = 5</b>
+        <h5>Inference steps = 5</h5>
         <tr>
           <td align="middle">
             <img src="imagesa/1-1-1.png" align="middle" width="64px" />
@@ -115,7 +159,7 @@
     <br>
     <div align="middle">
       <table style="width=100%">
-        <b>Inference steps = 20</b>
+        <h5>Inference steps = 20</h5>
         <tr>
           <td align="middle">
             <img src="imagesa/1-2-1.png" align="middle" width="64px" />
@@ -155,7 +199,7 @@
     The forward process algorithm is defined by:
     $$q(x_t|x_0)=N(x_t;\sqrt{\bar{\alpha}}x_0, (1-\bar{\alpha}_t)I)$$
     is equivalent to:
-    $$x_t=\sqrt{\bar{\alpha}_t}x_0+\sqrt{1-\bar{\alpha}_t}\epsilon \text{ where }\epsilon\sim N(0,1)$$
+    $$x_t=\sqrt{\bar{\alpha}_t}x_0+\sqrt{1-\bar{\alpha}_t}\epsilon \space\text{ where }\epsilon\sim N(0,1)$$
     $x_t$: noisy images<br>
     $x_0$: clean images<br>
     $\epsilon$: noise<br>
@@ -167,20 +211,20 @@
       <table style="width=100%">
         <tr>
           <td align="middle">
-            <img src="imagesa/1-3-1.png" align="middle" width="200px" />
+            <img src="imagesa/1-3-1.png" align="middle" width="230px" />
             <figcaption align="middle">Berkeley Campanile</figcaption>
           </td>
           <td align="middle">
-            <img src="imagesa/1-3-2.png" align="middle" width="200px" />
-            <figcaption align="middle">Noisy Campanile at t=250</figcaption>
+            <img src="imagesa/1-3-2.png" align="middle" width="230px" />
+            <figcaption align="middle">Noisy Campanile at $t=250$</figcaption>
           </td>
           <td align="middle">
-            <img src="imagesa/1-3-3.png" align="middle" width="200px" />
-            <figcaption align="middle">Noisy Campanile at t=500</figcaption>
+            <img src="imagesa/1-3-3.png" align="middle" width="230px" />
+            <figcaption align="middle">Noisy Campanile at $t=500$</figcaption>
           </td>
           <td align="middle">
-            <img src="imagesa/1-3-4.png" align="middle" width="200px" />
-            <figcaption align="middle">Noisy Campanile at t=750</figcaption>
+            <img src="imagesa/1-3-4.png" align="middle" width="230px" />
+            <figcaption align="middle">Noisy Campanile at $t=750$</figcaption>
           </td>
         </tr>
       </table>
@@ -189,37 +233,37 @@
     <br>
 
     <h3 align="middle">Classical Denoising</h3>
-    Calssically, I use gaussian blur filter to try to get rid of noise. But in this case this classical denoising does
+    Classically, we use gaussian blur filter to get rid of noise. But in this case this classical denoising does
     not work well.
 
     <div align="middle">
       <table style="width=100%">
         <tr>
           <td align="middle">
-            <img src="imagesa/1-4-1.png" align="middle" width="200px" />
-            <figcaption align="middle">Noisy Campanile at t=250</figcaption>
+            <img src="imagesa/1-4-1.png" align="middle" width="230px" />
+            <figcaption align="middle">Noisy Campanile at $t=250$</figcaption>
           </td>
           <td align="middle">
-            <img src="imagesa/1-4-2.png" align="middle" width="200px" />
-            <figcaption align="middle">Noisy Campanile at t=500</figcaption>
+            <img src="imagesa/1-4-2.png" align="middle" width="230px" />
+            <figcaption align="middle">Noisy Campanile at $t=500$</figcaption>
           </td>
           <td align="middle">
-            <img src="imagesa/1-4-3.png" align="middle" width="200px" />
-            <figcaption align="middle">Noisy Campanile at t=750</figcaption>
+            <img src="imagesa/1-4-3.png" align="middle" width="230px" />
+            <figcaption align="middle">Noisy Campanile at $t=750$</figcaption>
           </td>
         </tr>
         <tr>
           <td align="middle">
-            <img src="imagesa/1-4-4.png" align="middle" width="200px" />
-            <figcaption align="middle">Gaussian Denoised Campanile<br>at t=250</figcaption>
+            <img src="imagesa/1-4-4.png" align="middle" width="230px" />
+            <figcaption align="middle">Gaussian Denoised Campanile<br>at $t=250$</figcaption>
           </td>
           <td align="middle">
-            <img src="imagesa/1-4-5.png" align="middle" width="200px" />
-            <figcaption align="middle">Gaussian Denoised Campanile<br>at t=500</figcaption>
+            <img src="imagesa/1-4-5.png" align="middle" width="230px" />
+            <figcaption align="middle">Gaussian Denoised Campanile<br>at $t=500$</figcaption>
           </td>
           <td align="middle">
-            <img src="imagesa/1-4-6.png" align="middle" width="200px" />
-            <figcaption align="middle">Gaussian Denoised Campanile<br>at t=750</figcaption>
+            <img src="imagesa/1-4-6.png" align="middle" width="230px" />
+            <figcaption align="middle">Gaussian Denoised Campanile<br>at $t=750$</figcaption>
           </td>
         </tr>
       </table>
@@ -238,44 +282,44 @@
       <table style="width=100%">
         <tr>
           <td align="middle">
-            <img src="imagesa/1-3-1.png" align="middle" width="200px" />
+            <img src="imagesa/1-3-1.png" align="middle" width="230px" />
             <figcaption align="middle">Berkeley Campanile</figcaption>
           </td>
           <td align="middle">
-            <img src="imagesa/1-3-1.png" align="middle" width="200px" />
+            <img src="imagesa/1-3-1.png" align="middle" width="230px" />
             <figcaption align="middle">Berkeley Campanile</figcaption>
           </td>
           <td align="middle">
-            <img src="imagesa/1-3-1.png" align="middle" width="200px" />
+            <img src="imagesa/1-3-1.png" align="middle" width="230px" />
             <figcaption align="middle">Berkeley Campanile</figcaption>
           </td>
         </tr>
         <tr>
           <td align="middle">
-            <img src="imagesa/1-5-1.png" align="middle" width="200px" />
-            <figcaption align="middle">Noisy Campanile at t=250</figcaption>
+            <img src="imagesa/1-5-1.png" align="middle" width="230px" />
+            <figcaption align="middle">Noisy Campanile at $t=250$</figcaption>
           </td>
           <td align="middle">
-            <img src="imagesa/1-5-2.png" align="middle" width="200px" />
-            <figcaption align="middle">Noisy Campanile at t=500</figcaption>
+            <img src="imagesa/1-5-2.png" align="middle" width="230px" />
+            <figcaption align="middle">Noisy Campanile at $t=500$</figcaption>
           </td>
           <td align="middle">
-            <img src="imagesa/1-5-3.png" align="middle" width="200px" />
-            <figcaption align="middle">Noisy Campanile at t=750</figcaption>
+            <img src="imagesa/1-5-3.png" align="middle" width="230px" />
+            <figcaption align="middle">Noisy Campanile at $t=750$</figcaption>
           </td>
         </tr>
         <tr>
           <td align="middle">
-            <img src="imagesa/1-5-4.png" align="middle" width="200px" />
-            <figcaption align="middle">One-Step Denoised Campanile<br>at t=250</figcaption>
+            <img src="imagesa/1-5-4.png" align="middle" width="230px" />
+            <figcaption align="middle">One-Step Denoised Campanile<br>at $t=250$</figcaption>
           </td>
           <td align="middle">
-            <img src="imagesa/1-5-5.png" align="middle" width="200px" />
-            <figcaption align="middle">One-Step Denoised Campanile<br>at t=500</figcaption>
+            <img src="imagesa/1-5-5.png" align="middle" width="230px" />
+            <figcaption align="middle">One-Step Denoised Campanile<br>at $t=500$</figcaption>
           </td>
           <td align="middle">
-            <img src="imagesa/1-5-6.png" align="middle" width="200px" />
-            <figcaption align="middle">One-Step Denoised Campanile<br>at t=750</figcaption>
+            <img src="imagesa/1-5-6.png" align="middle" width="230px" />
+            <figcaption align="middle">One-Step Denoised Campanile<br>at $t=750$</figcaption>
           </td>
         </tr>
       </table>
@@ -286,11 +330,31 @@
 
 
     <h3 align="middle">Iterative Denoising</h3>
-    It's obvious that the Unet denoiser works much better than the Gaussian denoiser. But the result is still blurry as
-    more noise added to the image. To make the performance even better, I implement the iterative denoising. In theory,
-    the diffusion model allows me to iteratively denoising for 1000 timesteps. But to save time, I use a stride of 30 in
-    total timestep of $T=1000$. I generated a list of times steps <code>strided_timesteps</code>, with values:
-    <code>[990, 960, 930, 900, 870, 840, 810, 780, 750, 720, 690, 660, 630, 600, 570, 540, 510, 480, 450, 420, 390, 360, 330, 300, 270, 240, 210, 180, 150, 120, 90, 60, 30, 0]</code>
+
+
+    <h4>Enhancing Image Clarity through Iterative Denoising</h4>
+    <ul>
+      <li><strong>Comparison of Denoising Methods:</strong> It's clear that the <strong>Unet denoiser</strong>
+        outperforms the traditional Gaussian denoiser in refining image quality. However, challenges remain as images
+        become blurrier with increasing levels of added noise.</li>
+      <li><strong>Solution - Iterative Denoising:</strong> To address this issue and further improve performance, I
+        implemented an <strong>iterative denoising</strong> approach. This method refines the image step by step,
+        tackling noise more effectively than a single-pass process.</li>
+    </ul>
+    <h4>Technical Approach to Iterative Denoising</h4>
+    <ul>
+      <li><strong>Theoretical Basis:</strong> In theory, diffusion models like DeepFloyd IF allow for iterative
+        denoising, where each step incrementally removes noise to reveal a clearer image.</li>
+      <li><strong>Optimized Implementation:</strong> To save time while maintaining effectiveness, I used a
+        <strong>stride of 30</strong> within the total timestep of $T=1000$. This means the process skips intermediate
+        steps, focusing on key intervals for efficiency.
+      </li>
+      <li><strong>Timestep Sequence:</strong> I generated a specific list of timesteps called
+        <code>strided_timesteps</code> to guide the iterative process. The sequence includes the following values:
+        <code>[990, 960, 930, 900, 870, 840, 810, 780, 750, 720, 690, 660, 630, 600, 570, 540, 510, 480, 450, 420, 390, 360, 330, 300, 270, 240, 210, 180, 150, 120, 90, 60, 30, 0]</code>.
+        This structured progression ensures a balanced approach between speed and image quality.
+      </li>
+    </ul>
     <br>
     <br>
     The denoising algorithm on the <code>i</code>th step is:
@@ -312,31 +376,31 @@
         <tr>
           <td align="middle">
             <img src="imagesa/1-6-1.png" align="middle" width="100px" />
-            <figcaption align="middle">Noisy Campanile at t=90</figcaption>
+            <figcaption align="middle">Noisy Campanile at $t=90$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-6-2.png" align="middle" width="100px" />
-            <figcaption align="middle">Noisy Campanile at t=240</figcaption>
+            <figcaption align="middle">Noisy Campanile at $t=240$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-6-3.png" align="middle" width="100px" />
-            <figcaption align="middle">Noisy Campanile at t=390</figcaption>
+            <figcaption align="middle">Noisy Campanile at $t=390$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-6-4.png" align="middle" width="100px" />
-            <figcaption align="middle">Noisy Campanile at t=540</figcaption>
+            <figcaption align="middle">Noisy Campanile at $t=540$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-6-5.png" align="middle" width="100px" />
-            <figcaption align="middle">Noisy Campanile at t=690</figcaption>
+            <figcaption align="middle">Noisy Campanile at $t=690$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-6-6.png" align="middle" width="100px" />
-            <figcaption align="middle">Noisy Campanile at t=840</figcaption>
+            <figcaption align="middle">Noisy Campanile at $t=840$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-6-7.png" align="middle" width="100px" />
-            <figcaption align="middle">Noisy Campanile at t=990</figcaption>
+            <figcaption align="middle">Noisy Campanile at $t=990$</figcaption>
           </td>
         </tr>
       </table>
@@ -353,7 +417,7 @@
           </td>
           <td align="middle">
             <img src="imagesa/1-7-1.png" align="middle" width="200px" />
-            <figcaption align="middle">Noisy Campanile <br>at t=690</figcaption>
+            <figcaption align="middle">Noisy Campanile <br>at $t=690$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-7-2.png" align="middle" width="200px" />
@@ -409,7 +473,7 @@
 
     <h3 align="middle">Classifier-Free Guidance (CFG)</h3>
     Some images generated in the previous section are not very good. To improve the quality of images, I use a
-    technicque called <a href="https://arxiv.org/abs/2207.12598">Classifier-Free Guidance</a>. In this technicque, the
+    technique called <a href="https://arxiv.org/abs/2207.12598">Classifier-Free Guidance</a>. In this technique, the
     algorithm computes both a conditional and an unconditional noise estimate, then the new noise will be:
     $$\epsilon=\epsilon_u+\gamma(\epsilon_c+\epsilon_u)$$
     By taking $\gamma>1$, we get a much higher quality images. For this and later sections, I use text embeddings
@@ -448,35 +512,41 @@
     <br>
 
     <h3 align="middle">Image-to-Image Translation</h3>
-    Image-to-image translation takes in a clean image, adds noise to it to a level, and then denoises it. This allows
-    edits to existings images. The more noise it adds, the larger the edit will be.
+    <ul>
+      <li><strong>What It Is:</strong> Image-to-image translation is a technique that starts with a clean image,
+        introduces a controlled amount of noise to it, and then removes that noise through a denoising process. This
+        method enables modifications to existing images.</li>
+      <li><strong>Impact of Noise Levels:</strong> The extent of the edit depends on the amount of noise added. The more
+        noise introduced, the more significant the changes to the final image, allowing for a range of subtle to
+        dramatic transformations.</li>
+    </ul>
 
     <div align="middle">
       <table style="width=100%">
         <tr>
           <td align="middle">
             <img src="imagesa/1-10-1.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=960</figcaption>
+            <figcaption align="middle">Edit with $t=960$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-10-2.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=900</figcaption>
+            <figcaption align="middle">Edit with $t=900$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-10-3.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=840</figcaption>
+            <figcaption align="middle">Edit with $t=840$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-10-4.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=780</figcaption>
+            <figcaption align="middle">Edit with $t=780$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-10-5.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=690</figcaption>
+            <figcaption align="middle">Edit with $t=690$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-10-6.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=390</figcaption>
+            <figcaption align="middle">Edit with $t=390$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-3-1.png" align="middle" width="150px" />
@@ -486,27 +556,27 @@
         <tr>
           <td align="middle">
             <img src="imagesa/1-11-1.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=960</figcaption>
+            <figcaption align="middle">Edit with $t=960$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-11-2.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=900</figcaption>
+            <figcaption align="middle">Edit with $t=900$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-11-3.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=840</figcaption>
+            <figcaption align="middle">Edit with $t=840$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-11-4.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=780</figcaption>
+            <figcaption align="middle">Edit with $t=780$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-11-5.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=690</figcaption>
+            <figcaption align="middle">Edit with $t=690$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-11-6.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=390</figcaption>
+            <figcaption align="middle">Edit with $t=390$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-11-0.png" align="middle" width="150px" />
@@ -516,27 +586,27 @@
         <tr>
           <td align="middle">
             <img src="imagesa/1-12-1.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=960</figcaption>
+            <figcaption align="middle">Edit with $t=960$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-12-2.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=900</figcaption>
+            <figcaption align="middle">Edit with $t=900$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-12-3.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=840</figcaption>
+            <figcaption align="middle">Edit with $t=840$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-12-4.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=780</figcaption>
+            <figcaption align="middle">Edit with $t=780$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-12-5.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=690</figcaption>
+            <figcaption align="middle">Edit with $t=690$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-12-6.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=390</figcaption>
+            <figcaption align="middle">Edit with $t=390$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-12-0.png" align="middle" width="150px" />
@@ -555,27 +625,27 @@
         <tr>
           <td align="middle">
             <img src="imagesa/1-13-1.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=960</figcaption>
+            <figcaption align="middle">Edit with $t=960$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-13-2.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=900</figcaption>
+            <figcaption align="middle">Edit with $t=900$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-13-3.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=840</figcaption>
+            <figcaption align="middle">Edit with $t=840$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-13-4.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=780</figcaption>
+            <figcaption align="middle">Edit with $t=780$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-13-5.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=690</figcaption>
+            <figcaption align="middle">Edit with $t=690$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-13-6.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=390</figcaption>
+            <figcaption align="middle">Edit with $t=390$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-13-0.png" align="middle" width="150px" />
@@ -585,27 +655,27 @@
         <tr>
           <td align="middle">
             <img src="imagesa/1-14-1.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=960</figcaption>
+            <figcaption align="middle">Edit with $t=960$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-14-2.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=900</figcaption>
+            <figcaption align="middle">Edit with $t=900$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-14-3.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=840</figcaption>
+            <figcaption align="middle">Edit with $t=840$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-14-4.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=780</figcaption>
+            <figcaption align="middle">Edit with $t=780$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-14-5.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=690</figcaption>
+            <figcaption align="middle">Edit with $t=690$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-14-6.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=390</figcaption>
+            <figcaption align="middle">Edit with $t=390$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-14-0.png" align="middle" width="150px" />
@@ -615,27 +685,27 @@
         <tr>
           <td align="middle">
             <img src="imagesa/1-15-1.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=960</figcaption>
+            <figcaption align="middle">Edit with $t=960$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-15-2.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=900</figcaption>
+            <figcaption align="middle">Edit with $t=900$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-15-3.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=840</figcaption>
+            <figcaption align="middle">Edit with $t=840$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-15-4.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=780</figcaption>
+            <figcaption align="middle">Edit with $t=780$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-15-5.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=690</figcaption>
+            <figcaption align="middle">Edit with $t=690$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-15-6.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit with t=390</figcaption>
+            <figcaption align="middle">Edit with $t=390$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-15-0.png" align="middle" width="150px" />
@@ -725,27 +795,27 @@
         <tr>
           <td align="middle">
             <img src="imagesa/1-19-1.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit <br> t=960</figcaption>
+            <figcaption align="middle">Edit <br> $t=960$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-19-2.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit <br> t=900</figcaption>
+            <figcaption align="middle">Edit <br> $t=900$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-19-3.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit <br> t=840</figcaption>
+            <figcaption align="middle">Edit <br> $t=840$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-19-4.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit <br> t=780</figcaption>
+            <figcaption align="middle">Edit <br> $t=780$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-19-5.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit <br> t=690</figcaption>
+            <figcaption align="middle">Edit <br> $t=690$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-19-6.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit <br> t=390</figcaption>
+            <figcaption align="middle">Edit <br> $t=390$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-3-1.png" align="middle" width="150px" />
@@ -760,31 +830,31 @@
         <tr>
           <td align="middle">
             <img src="imagesa/1-20-1.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit <br> t=960</figcaption>
+            <figcaption align="middle">Edit <br> $t=960$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-20-2.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit <br> t=900</figcaption>
+            <figcaption align="middle">Edit <br> $t=900$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-20-3.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit <br> t=840</figcaption>
+            <figcaption align="middle">Edit <br> $t=840$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-20-4.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit <br> t=780</figcaption>
+            <figcaption align="middle">Edit <br> $t=780$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-20-5.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit <br> t=690</figcaption>
+            <figcaption align="middle">Edit <br> $t=690$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-20-6.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit <br> t=390</figcaption>
+            <figcaption align="middle">Edit <br> $t=390$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-17-1.png" align="middle" width="150px" />
-            <figcaption align="middle">Cat to Man</figcaption>
+            <figcaption align="middle">Cat to <br>Man </figcaption>
           </td>
         </tr>
       </table>
@@ -794,27 +864,27 @@
         <tr>
           <td align="middle">
             <img src="imagesa/1-21-1.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit <br> t=960</figcaption>
+            <figcaption align="middle">Edit <br> $t=960$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-21-2.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit <br> t=900</figcaption>
+            <figcaption align="middle">Edit <br> $t=900$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-21-3.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit <br> t=840</figcaption>
+            <figcaption align="middle">Edit <br> $t=840$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-21-4.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit <br> t=780</figcaption>
+            <figcaption align="middle">Edit <br> $t=780$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-21-5.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit <br> t=690</figcaption>
+            <figcaption align="middle">Edit <br> $t=690$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-21-6.png" align="middle" width="150px" />
-            <figcaption align="middle">Edit <br> t=390</figcaption>
+            <figcaption align="middle">Edit <br> $t=390$</figcaption>
           </td>
           <td align="middle">
             <img src="imagesa/1-18-1.png" align="middle" width="150px" />
@@ -826,13 +896,29 @@
     <br>
     <br>
     <h3 align="middle">Visual Anagrams</h3>
-    In this section, I create optical illusion with diffusion models. The model with generate images that look like one
-    thing normally and another thing up side down. To implement this, the estimate noise from the model is modified
-    according to the algorithm:
-    $$\epsilon_1 = \text{UNet}(x_t, t, p_1)$$
-    $$\epsilon_2 = \text{flip}(\text{UNet}(\text{flip}(x_t), t, p_2))$$
-    $$\epsilon = (\epsilon_1 + \epsilon_2)/2$$
 
+    In this section, I explore the creation of optical illusions using diffusion models. These illusions are designed to
+    generate images that appear as one object when viewed normally and as a completely different object when viewed
+    upside down.</li>
+
+    <h4>Implementation Method</h4>
+    <ul>
+      <li><strong>Modifying Noise Estimation:</strong> To achieve this dual-image effect, the noise estimation process
+        of the diffusion model is adjusted. This involves combining two different noise predictions to create a hybrid
+        image that holds two distinct interpretations based on orientation.</li>
+      <li><strong>Algorithm Details:</strong> The specific approach uses the following steps to modify the noise
+        estimation:
+        <ul>
+          <li>Compute the first noise estimate using the UNet model with the original image and a specific prompt.</li>
+          $$\epsilon_1 = \text{UNet}(x_t, t, p_1)$$
+          <li>Compute the second noise estimate by flipping the image, applying the UNet model with a different prompt,
+            and flipping the result back.</li>
+          $$\epsilon_2 = \text{flip}(\text{UNet}(\text{flip}(x_t), t, p_2))$$
+          <li>Average the two noise estimates to create the final noise value used in the denoising process.</li>
+          $$\epsilon = (\epsilon_1 + \epsilon_2)/2$$
+        </ul>
+      </li>
+    </ul>
 
     <div align="middle">
       <table style="width=100%">
@@ -873,11 +959,23 @@
     <br>
     <br>
     <h3 align="middle">Hybrid Images</h3>
-    In this section, I create another optical illusion that looks like one thing closely and another thing far away.
-    The estimate noise algorithm is modified following the algorithm:
-    $$\epsilon_1 = \text{UNet}(x_t, t, p_1)$$
-    $$\epsilon_2 = \text{UNet}(x_t, t, p_2)$$
-    $$\epsilon = f_\text{lowpass}(\epsilon_1) + f_\text{highpass}(\epsilon_2)$$
+
+In this section, I explore the creation of a unique optical illusion using diffusion models. These hybrid images are designed to appear as one object when viewed up close and as a completely different object when viewed from a distance.</li>
+
+<h4>Implementation Method</h4>
+<ul>
+    <li><strong>Modifying Noise Estimation:</strong> To achieve this dual-perception effect, the noise estimation process in the diffusion model is customized. This involves blending two distinct noise predictions to craft an image that reveals different content based on proximity.</li>
+    <li><strong>Algorithm Details:</strong> The specific approach modifies the noise estimation using the following steps:
+        <ul>
+            <li>Compute the first noise estimate with the UNet model using the image at a given timestep and a specific prompt.</li>
+            $$\epsilon_1 = \text{UNet}(x_t, t, p_1)$$
+            <li>Compute the second noise estimate similarly with a different prompt.</li>
+            $$\epsilon_2 = \text{UNet}(x_t, t, p_2)$$
+            <li>Combine the two estimates by applying a low-pass filter to the first and a high-pass filter to the second, then summing them. This technique ensures that low-frequency details (visible from afar) and high-frequency details (visible up close) create the dual-image effect.</li>
+            $$\epsilon = f_\text{lowpass}(\epsilon_1) + f_\text{highpass}(\epsilon_2)$$
+        </ul>
+    </li>
+</ul>
     <div align="middle">
       <table style="width=100%">
         <tr>
@@ -911,8 +1009,14 @@
 
 
     <h2 align="middle">Part B: Diffusion Models from Scratch</h2>
-    In this part, I will build the denoise Unet from scratch using <code>torch.nn</code>. I use the MNIST dataset from
-    <code>torchvision.datasets.MNIST</code> in this part for training purpose.<br>
+In this part of the project, I focus on constructing a denoising UNet model from the ground up using the <code>torch.nn</code> framework, a powerful tool for building neural networks.
+<h4>Overview of Custom UNet Development</h4>
+<ul>
+    <li><strong>Training Data:</strong> For training this model, I utilize the MNIST dataset, accessed through <code>torchvision.datasets.MNIST</code>. This dataset consists of thousands of handwritten digit images, providing a solid foundation for teaching the model to recognize and reconstruct numbers.</li>
+    <li><strong>Purpose:</strong> The goal is to demonstrate the process of creating a custom diffusion model tailored for denoising tasks, showing how such models can be built and trained to refine noisy images into clear, recognizable digits.</li>
+</ul>
+
+    <br>
     For the whole part, I use random seed $24$ for reproducibility purpose.
 
     <br>
@@ -963,8 +1067,10 @@
     </div>
     <br>
     <br>
-    The denoise results of the training in different epoch are(top: original image, middle: noisy image, bottom:
-    estimate original image):
+    The denoise results of the training in different epoch are:<br>
+    <div align="middle">(top: original image, middle: noisy image, bottom:
+    estimate original image)</div>
+    
     <div align="middle">
       <table style="width=100%">
         <tr>
@@ -1000,8 +1106,13 @@
     <br>
 
     <h3 align="middle">Time Conditional UNet</h3>
-    To implement a diffusion model similar to part A, I need to add the variable of time to the model to perform
-    iteratively denoising. To do this, I added two fully connected blocks to the model by the following structure:
+
+To create a diffusion model similar to the one used in Part A, I needed to incorporate the concept of time into the model to enable iterative denoising. This allows the model to refine images step by step over multiple time intervals. Introducing time as a variable helps the model understand the progression of noise addition and removal, mimicking the forward and backward processes of diffusion models for more effective image reconstruction.
+
+    <h4>Implementation Approach</h4>
+<ul>
+    <li>To achieve this, I added two <strong>fully connected blocks</strong> to the model architecture by the following structure. These blocks integrate the time step <code>t</code> as a parameter, guiding the model on how much noise to remove at each stage of the denoising process.</li>
+</ul>
 
     <div align="middle">
       <img src="imagesb/conditional_arch.png" align="middle" width="900px" />
@@ -1103,9 +1214,17 @@
     <br>
     <br>
     <h3 align="middle">Class Contidional UNet</h3>
-    It's obvious that some of the denoised ouptput of the time conditional model is still not very good in generating
-    digits. Hence I improve the model by adding a class condition. To implement this, I add two additional
-    fully-connected blocks at the same places of time condition blocks.
+
+    <h4>Performance Issue</h4>
+It's evident that the denoised output from the time conditional model does not always produce high-quality digit images. While it incorporates time as a variable for iterative denoising, the results still fall short in accurately generating clear digits.
+<br>
+I improved the model by integrating a <strong>class condition</strong> to provide additional context about the type of digit being generated. This helps the model focus on specific digit characteristics during the denoising process.
+
+    <h4>Implementation Approach</h4>
+<ul>
+    <li>To achieve this, I added two additional <strong>fully-connected blocks</strong> to the model architecture. These blocks are placed at the same locations as the existing time condition blocks, allowing the model to process both time and class information simultaneously.</li>
+    <li>By conditioning the model on class labels (e.g., identifying whether the image should be a '1', '2', etc.), it can better tailor the denoising process, resulting in improved digit generation quality.</li>
+</ul>
     <br>
     <br>
     The training algorithm of the model is:
@@ -1119,11 +1238,17 @@
     </div>
     <br>
 
-    The model parameters and traing process are similar to the time conditional UNet model. For the class-conditioning
-    vector $c$, I use one-hot encoding to produce the one-hot vector from the labels of the dataset. Since the UNet need
-    to work simetimes without the class condition, I implement a dropout of class condition at a probability of $10\%$ by
-    setting the class condition vector to 0.
 
+
+The model parameters and training process for the class-conditional UNet are largely consistent with those of the time-conditional UNet model. This ensures a comparable foundation in terms of architecture and training methodology.<br>
+The focus remains on enhancing the model's ability to denoise and generate images, with the added benefit of class-specific guidance to improve the accuracy of digit reconstruction.
+</ul>
+<h4>Class-Conditioning Vector Implementation</h4>
+<ul>
+    <li><strong>One-Hot Encoding:</strong> For the class-conditioning vector $c$, I utilize one-hot encoding to transform the labels from the dataset into a one-hot vector format. This encoding allows the model to recognize and focus on specific digit classes (e.g., '0' through '9') during the denoising process.</li>
+    <li><strong>Dropout Mechanism:</strong> Since the UNet must sometimes operate without class conditioning to maintain flexibility, I implemented a dropout mechanism. This dropout is applied at a probability of $10%$, where the class-conditioning vector is set to zero, effectively disabling class guidance in those instances.</li>
+</ul>
+<br>
     The training loss is:
     <div align="middle">
       <table style="width=100%">
