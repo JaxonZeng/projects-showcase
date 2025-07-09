@@ -18,9 +18,14 @@
     h1,
     h2,
     h3,
-    h4 {
+    h4,
+    h5 {
       font-family: "Trebuchet MS", sans-serif;
       color: #e2e2e2;
+    }
+
+    a {
+      color: #7caefe;
     }
 
     blockquote {
@@ -28,10 +33,22 @@
       background-color: #313131;
     }
   </style>
+
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
   <title>Face Morphing</title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
 </head>
+
 
 
 <body>
@@ -45,8 +62,17 @@
   <div>
 
     <h2 align="middle">Overview</h2>
-    <p>In this project I produce a "morph" animation of my face into my friend Ben's face. Then I compute the mean face of Brazilian people through morphing into the mean point. I also explore the mean face with my face and try to make me smile through morphing.</p>
-
+    <p>
+      This project focuses on <strong>face morphing</strong>, a fascinating technique in computer graphics that allows
+      one face to transform seamlessly into another. The key objectives of this work include:
+    </p>
+    <ul>
+      <li>Creating a smooth animation that transitions my face into my friend Ben’s face.</li>
+      <li>Computing the <strong>average face</strong> of a Brazilian population by blending multiple facial features
+        into a single mean shape.</li>
+      <li>Experimenting with morphing techniques to blend my face with the mean face and even transform my neutral
+        expression into a smile.</li>
+    </ul>
 
     <h2 align="middle">Part 1: Defining Correspondences</h2>
     <p> I start by taking photos of me and my friend Ben.</p>
@@ -67,42 +93,50 @@
         </tr>
       </table>
     </div>
-    <p>Then I label both faces with the tool from <a href="https://cal-cs180.github.io/fa23/hw/proj3/tool.html" target="_blank" rel="noopener noreferrer">
-      Correspondence Tool
-  </a>. I use 88 points for each faces.</p>
-  <div align="middle">
-    <table style="width=100%">
-      <tr>
+    <p>Then I label both faces with the tool from <a href="https://cal-cs180.github.io/fa23/hw/proj3/tool.html"
+        target="_blank" rel="noopener noreferrer">
+        Correspondence Tool
+      </a>. I use $88$ points for each faces.</p>
+    <div align="middle">
+      <table style="width=100%">
+        <tr>
 
-        <td>
-          <img src="images/1-3.png" align="middle" width="400px" />
-          <figcaption align="middle">Jaxon's Face Labeled</figcaption>
-        </td>
-        <td>
-          <img src="images/1-4.png" align="middle" width="400px" />
-          <figcaption align="middle">Ben's Face Labeled</figcaption>
-        </td>
-      </tr>
-    </table>
-  </div>
-  <p>In the end of this part, I triangulate two faces using scipy.spatial.Delaunay. For the first three parts, I use the same triangulation.</p>
-  <div align="middle">
-  <table style="width=100%">
-    <tr>
+          <td>
+            <img src="images/1-3.png" align="middle" width="400px" />
+            <figcaption align="middle">Jaxon's Face Labeled</figcaption>
+          </td>
+          <td>
+            <img src="images/1-4.png" align="middle" width="400px" />
+            <figcaption align="middle">Ben's Face Labeled</figcaption>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <p>In the end of this part, I focus on the <strong>triangulation</strong> of facial features, a crucial step in face
+      morphing.</p>
+    <ul>
+      <li>Using the <code>scipy.spatial.Delaunay</code> library to triangulate two faces by dividing them into a mesh of
+        triangles based on labeled key points.</li>
+      <li>Applying the same triangulation mesh across the first three parts of the project to ensure consistency in the
+        transformation process.</li>
+    </ul>
+    <div align="middle">
+      <table style="width=100%">
+        <tr>
 
-      <td>
-        <img src="images/1-5.png" align="middle" width="400px" />
-        <figcaption align="middle">Jaxon's Face Triangulation</figcaption>
-      </td>
-      <td>
-        <img src="images/1-6.png" align="middle" width="400px" />
-        <figcaption align="middle">Ben's Face Triangulation</figcaption>
-      </td>
-    </tr>
-  </table>
-</div>
-    
-    
+          <td>
+            <img src="images/1-5.png" align="middle" width="400px" />
+            <figcaption align="middle">Jaxon's Face Triangulation</figcaption>
+          </td>
+          <td>
+            <img src="images/1-6.png" align="middle" width="400px" />
+            <figcaption align="middle">Ben's Face Triangulation</figcaption>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+
 
 
     <br>
@@ -110,17 +144,24 @@
 
     <h2 align="middle">Part 2: Compute the "Mid-way" Face</h2>
 
-    <p>In this part, I will compute the "Mid-way" face between Ben and me through morphing. 
-      <br>
-      1. Compute the middle position of our faces through average the labeling points of our faces.<br>
-      2. Calculate the affine transformation matrix from the original triagle to the average triangle. Then perform inverse warping by multiple the target image pixels with the inverse of affine transformation matrix. I loop over all the triangles to compute the "Mid-way" image.<br>
-      3. Cross-dissolve the warped image of Ben and my face to define the color the "Mid-way" Face.
+    <p>
+      In this section, I focus on creating the <strong>Mid-way Face</strong>, a blended image that represents an
+      intermediate state between my face and my friend Ben’s face using morphing techniques. The process involves the
+      following steps:
     </p>
+    <ol>
+      <li>Calculating the average positions of the labeled key points on our faces to determine the middle shape.</li>
+      <li>Computing the affine transformation matrix to map the original triangles of each face to the average triangle
+        shape, then applying inverse warping by multiplying the target image pixels with the inverse of this matrix.
+        This is done for all triangles to form the "Mid-way" image.</li>
+      <li>Blending the colors of the warped images of Ben’s face and my face through cross-dissolving to define the
+        final appearance of the Mid-way Face.</li>
+    </ol>
 
     <div align="middle">
       <table style="width=100%">
         <tr>
-    
+
           <td>
             <img src="images/2-3.png" align="middle" width="400px" />
             <figcaption align="middle">Mid-way position on Jaxon's Face</figcaption>
@@ -136,7 +177,7 @@
     <div align="middle">
       <table style="width=100%">
         <tr>
-    
+
           <td>
             <img src="images/1-1.png" align="middle" width="300px" />
             <figcaption align="middle">Jaxon's Face</figcaption>
@@ -155,15 +196,24 @@
     <br>
     <br>
     <h2 align="middle">Part 3: The Morph Sequence</h2>
-    <p>By applying different fraction in morphing and cross-dissolve between [0, 1], I create a smooth transition from my face to Ben's face.</p>
+    <p>
+      In this section, I focus on creating a <strong>morph sequence</strong>, a series of images that showcase the
+      gradual transformation from my face to my friend Ben’s face. The process involves:
+    </p>
+    <ul>
+      <li>Adjusting the morphing and cross-dissolve fractions between the range of [0, 1] to blend the facial features
+        and colors step by step.</li>
+      <li>Generating a smooth transition that visually captures each stage of the change between our faces.</li>
+    </ul>
 
     <div align="middle">
       <table style="width=100%">
         <tr>
-    
+
           <td>
             <img src="images/3-1.gif" align="middle" width="400px" />
-            <figcaption align="middle">Jaxon's Face to Ben's Face <br>(refresh the website if the face is not changing)</figcaption>
+            <figcaption align="middle">Jaxon's Face to Ben's Face <br>(refresh the page if the face is not changing)
+            </figcaption>
           </td>
           </td>
         </tr>
@@ -172,9 +222,19 @@
     <br>
     <br>
     <h2 align="middle">Part 4: The "Mean Face" of a Population</h2>
-    <p>For this part, I compute the average face of a population from multiple images collected from the population. The set of images I use is the faces of Brazilians collected at the <a href="https://fei.edu.br/~cet/facedatabase.html" target="_blank" rel="noopener noreferrer">
-      Artificial Intelligence Laboratory of FEI
-  </a>. This dataset contains faces collected from 200 people. Two photos are taken for each person with one normal face and one smiling face.</p>
+
+    <p>
+      In this section, I focus on calculating the <strong>average face</strong> of a population using a collection of
+      facial images. The key details of this process include:
+    </p>
+    <ul>
+      <li>Utilizing a dataset of Brazilian faces gathered by the <a href="https://fei.edu.br/~cet/facedatabase.html"
+          target="_blank" rel="noopener noreferrer">
+          Artificial Intelligence Laboratory of FEI
+        </a>, with labeled facial key points.</li>
+      <li>Working with images from 200 individuals, where each person has two photos taken—one with a normal expression
+        and one with a smiling expression.</li>
+    </ul>
 
     <div align="middle">
       <table style="width=100%">
@@ -195,20 +255,31 @@
         <tr>
           <td>
             <img src="images/4-3.png" align="middle" width="300px" />
-            <figcaption align="middle">Example Brazilian Male Face Triangulation<br>from the FEI Face Database</figcaption>
+            <figcaption align="middle">Example Brazilian Male Face Triangulation<br>from the FEI Face Database
+            </figcaption>
           </td>
           <td>
             <img src="images/4-4.png" align="middle" width="300px" />
-            <figcaption align="middle">Example Brazilian Famale Face Triangulation<br>from the FEI Face Database</figcaption>
+            <figcaption align="middle">Example Brazilian Famale Face Triangulation<br>from the FEI Face Database
+            </figcaption>
           </td>
           <td>
             <img src="images/4-7.png" align="middle" width="300px" />
-            <figcaption align="middle">Example Brazilian Famale Smiling Face Triangulation<br>from the FEI Face Database</figcaption>
+            <figcaption align="middle">Example Brazilian Famale Smiling Face Triangulation<br>from the FEI Face Database
+            </figcaption>
           </td>
         </tr>
       </table>
     </div>
-    <p>I compute the mean face of Brazilians using the similar process in part 2. I compute the average of all the labeling points of Brazilian faces and warp all the images toward the average position. Then I calculate the mean of all the faces' color to create the mean face.</p>
+    <br>
+      <p>
+  In this section, I calculate the <strong>mean face</strong> of Brazilians using a process similar to that in Part 2. The steps involved are as follows:
+</p>
+<ul>
+  <li>Computing the average positions of all labeled key points across the Brazilian face dataset.</li>
+  <li>Warping each individual face image toward this average position to align facial features.</li>
+  <li>Calculating the mean color values of all faces to create the final mean face image, representing a blended appearance of the population.</li>
+</ul>
     <div align="middle">
       <table style="width=100%">
         <tr>
@@ -259,7 +330,8 @@
     </div>
 
 
-    <p>I also try to warp my face into the mean Brazilian face position and warp the mean Brazilian to my face position.</p>
+    <p>I also try to warp my face into the mean Brazilian face position and warp the mean Brazilian face to my face position.
+    </p>
     <div align="middle">
       <table style="width=100%">
         <tr>
@@ -279,25 +351,26 @@
     <br>
     <br>
     <h2 align="middle">Part 5: Caricatures: Extrapolating from the Mean</h2>
-    <p>I created caricatures of my face by exploring the position of my face away from the mean Brazilian face. I set the warping fraction out of the range of [0, 1] to create the funny result.</p>
+    <p>I created caricatures of my face by exploring the position of my face away from the mean Brazilian face. I set
+      the warping fraction out of the range of $[0, 1]$ to create the funny result.</p>
 
     <div align="middle">
       <table style="width=100%">
         <tr>
           <td>
             <img src="images/5-1.png" align="middle" width="300px" />
-            <figcaption align="middle">Warping faction = -1</figcaption>
+            <figcaption align="middle">Warping faction $= -1$</figcaption>
           </td>
           <td>
             <img src="images/5-2.png" align="middle" width="300px" />
-            <figcaption align="middle">Warping fraction = 2</figcaption>
+            <figcaption align="middle">Warping fraction $= 2$</figcaption>
           </td>
 
         </tr>
 
       </table>
     </div>
-    <h2 align="middle">Bells and Whistles: Let Him Smile</h2>
+    <h2 align="middle">Epilogue: Let Him Smile</h2>
     I try to make my face smile by transforming my normal face into the position of mean smiling Brazilian faces.
     The method of morphing is the same as before.
     <div align="middle">
@@ -309,7 +382,7 @@
           </td>
           <td>
             <img src="images/6-2.png" align="middle" width="300px" />
-            <figcaption align="middle">warped Jaxon's Smiling Face</figcaption>
+            <figcaption align="middle">Warped Jaxon's Smiling Face</figcaption>
           </td>
           <td>
             <img src="images/4-8.png" align="middle" width="300px" />
